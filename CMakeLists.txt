@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(EXECUTABLE_NAME "conway")
-set(sources Game.hpp Game.cpp Life.hpp Life.cpp InputManager.hpp InputManager.cpp GameState.hpp GameState.cpp)
+set(sources Game.hpp Game.cpp Life.hpp Life.cpp InputManager.hpp InputManager.cpp)
 add_executable(conway main.cpp ${sources})
 
 install(TARGETS conway
