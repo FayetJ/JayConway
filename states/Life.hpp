@@ -15,6 +15,9 @@ public:
 	Life();
 	~Life();
 
+	void handleEvents(Game* game);
+	void update(Game* game);
+	void render(Game* game);
 
 	void init(int preset=0);
 	bool getCell(int x, int y);

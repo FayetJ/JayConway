@@ -16,8 +16,6 @@ int main()
 
 	while(game->running() == true)
 	{
-		game->debugConsole();
-		game->handleEvents();
 		game->update();
 		game->render();
 		SDL_Delay(12);
