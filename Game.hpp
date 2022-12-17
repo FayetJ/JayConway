@@ -8,9 +8,9 @@
 #include <ratio>
 #include <array>
 #include <vector>
-#include "Life.hpp"
 
 class GameState;
+class InputManager;
 
 class Game
 {
@@ -32,8 +32,10 @@ public:
 	void changeState(GameState* state);
 	void pushState(GameState* state);
 	void popState();
+	GameState* getCurrentState();
 
 	// Commands
+
 
 	// Rendering
 
@@ -44,11 +46,12 @@ public:
 
 	bool running() {return isRunning;}
 
+	SDL_Window* window;
+	SDL_Renderer* renderer;
+
 private:
 	// Window Handling
 	bool isRunning;
-	SDL_Window* window;
-	SDL_Renderer* renderer;
 
 	// Time Handling
 	std::chrono::steady_clock::time_point startTime;
@@ -56,6 +59,7 @@ private:
 	std::chrono::steady_clock::time_point currentTime;
 	std::chrono::duration<int, std::ratio<1,1000000000>> deltan;
 
+	InputManager* inputManager;
 	std::vector<GameState*> states;
 	int currentTick;
 	int targetFps;

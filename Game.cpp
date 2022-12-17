@@ -1,5 +1,6 @@
 #include "Game.hpp"
 #include "GameState.hpp"
+#include "InputManager.hpp"
 
 Game::Game()
 {
@@ -15,6 +16,7 @@ Game::~Game()
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen, int argTargetFps)
 {
+	inputManager = new(InputManager);
 	targetFps = argTargetFps;
 	deltan = std::chrono::duration<int, std::ratio<1,1000000000>> (1000000000/targetFps);
 	int flags = 0;
@@ -55,7 +57,7 @@ void Game::waitForFrame()
 
 void Game::handleEvents()
 {
-	states.back()->handleEvents(this);
+	inputManager->handleEvents();
 }
 
 void Game::update()
@@ -66,6 +68,16 @@ void Game::update()
 void Game::render()
 {
 	states.back()->render(this);
+}
+
+void Game::pushState(GameState* state)
+{
+	states.push_back(state);
+}
+
+GameState* Game::getCurrentState()
+{
+	return states.back();
 }
 
 void Game::close()

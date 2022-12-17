@@ -5,24 +5,20 @@ Life::Life()
 
 }
 
-Life::~Life()
+void Life::init()
 {
-	m_running = false;
-}
-
-void Life::init(int preset)
-{
+	int preset=1;
 	m_grid[0].fill(false);
 	m_grid.fill(m_grid[0]);
 	m_oldGrid = m_grid;
 	m_generation = 0;
 	m_tick = 0;
 	m_running = true;
-	m_speed = 10;
+	m_speed = 20;
 	generatePreset(preset);
 }
 
-void Life::update()
+void Life::update(Game* game)
 {
 	if (!m_frozen && !m_paused)
 	{
@@ -32,6 +28,35 @@ void Life::update()
 			nextGen();
 		}
 	}
+}
+
+void Life::render(Game* game)
+{
+	bool alive = false;
+	int scale = 30;
+	int w = 0;
+		int h = 0;
+		SDL_GetWindowSize(game->window,&w,&h);
+		for (int i = 0 ; i<getSize() ; ++i)
+		{
+			for (int j = 0 ; j<getSize() ; ++j)
+			{
+				alive = getCell(i,j);
+				SDL_Rect cell {i*scale-i,j*scale-j,scale,scale};
+				SDL_SetRenderDrawColor(game->renderer, 255, 255, 255, 255);
+				if (alive)
+				{
+					SDL_RenderFillRect(game->renderer,&cell);
+				}
+				else if(!alive)
+				{
+					SDL_SetRenderDrawColor(game->renderer, 0, 0, 0, 255);
+					SDL_RenderFillRect(game->renderer,&cell);
+				}
+				SDL_SetRenderDrawColor(game->renderer, 255, 255, 255, 255);
+				SDL_RenderDrawRect(game->renderer,&cell);
+			}
+		}
 }
 
 void Life::nextGen()

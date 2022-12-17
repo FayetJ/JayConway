@@ -5,13 +5,25 @@
 #include <ratio>
 #include <chrono>
 #include <unistd.h>
+#include "GameState.hpp"
+#include "LifeMenu.hpp"
+#include "Life.hpp"
 
 Game *game = nullptr;
 
+void testFn(GameState* state)
+{
+
+}
+
 int main()
 {
+	std::cout << SDLK_BACKSPACE << std::endl;
+
 	int fps = 60;
 	game = new Game();
+	LifeMenu* life = new(LifeMenu);
+	testFn(life);
 	game->init("Conway", 0, 0, 800, 600, false, fps);
 
 	while(game->running() == true)

@@ -5,36 +5,45 @@
 #include <iostream>
 #include "GameState.hpp"
 
-
-// Will change to be a gamestate
 class Life : public GameState
 {
-
 public:
-
 	Life();
-	~Life();
 
-	void handleEvents(Game* game);
+	// Routine
 	void update(Game* game);
 	void render(Game* game);
+	void init();
+	void cleanup(){};
+	void pause(){};
+	void resume(){};
+	void rightAction(){};
+	void leftAction(){};
+	void upAction(){};
+	void downAction(){};
+	void spaceAction(){};
+	void escapeAction(){};
 
-	void init(int preset=0);
+	// Get/Set
 	bool getCell(int x, int y);
 	int getSize();
 	int getGen();
 	void setSpeed(int ticksPerGen);
-	int createGlider(int x, int y);
-	int createBlinker(int x, int y);
-	int createPentaDecathlon(int x, int y);
+
+	// Life Flow
 	void update();
 	void nextGen();
 	void pauseGame(bool paused);
 	void freezeSimulation(bool frozen);
 	void toggleFrozen();
 	void togglePause();
+
 	void generatePreset(int preset);
 
+	// Create Shapes
+	int createGlider(int x, int y);
+	int createBlinker(int x, int y);
+	int createPentaDecathlon(int x, int y);
 
 
 private:

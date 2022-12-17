@@ -16,12 +16,14 @@ class InputManager
 public:
 	InputManager();
 	void handleEvents();
-	Event getEvent(SDL_Event sdlEvent);
-	void sendEvent(Event event);
 
 private:
-	std::vector<GameState*> states;
 	Game *game;
+	static const int up = SDLK_UP;
+	static const int right = SDLK_RIGHT;
+	static const int space = SDLK_SPACE;
+	static const int escape = SDLK_ESCAPE;
+
 };
 
 #endif // INPUTMANAGER_HPP

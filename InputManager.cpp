@@ -18,32 +18,31 @@ void InputManager::handleEvents()
 
 					break;
 
-				case SDLK_UP:
+				case up:
+					game->getCurrentState()->upAction();
 					break;
 
 				case SDLK_DOWN:
+					game->getCurrentState()->downAction();
 					break;
 
-				case SDLK_RIGHT:
+				case right:
+					game->getCurrentState()->rightAction();
 					break;
 
 				case SDLK_LEFT:
+					game->getCurrentState()->leftAction();
 					break;
 
-				case SDLK_SPACE:
-					//sendEvent(Event::pause);
+				case space:
+					game->getCurrentState()->spaceAction();
 					break;
 
-				case SDLK_ESCAPE:
+				case escape:
+					game->getCurrentState()->escapeAction();
 					break;
 
 			}
 		}
 	}
-
-}
-
-Event InputManager::getEvent(SDL_Event sdlEvent)
-{
-	return Event::up;
 }
