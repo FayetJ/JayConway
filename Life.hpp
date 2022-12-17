@@ -34,7 +34,7 @@ public:
 
 
 private:
-	static constexpr int arraySize=24; // Compile-time constant very baaaad
+	static constexpr int arraySize=30; // Compile-time constant very baaaad
 	int m_speed;
 	int m_generation;
 	int m_tick;

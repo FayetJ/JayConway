@@ -130,7 +130,7 @@ void Game::update()
 
 void Game::drawCell(int x, int y)
 {
-	int scale = 40;
+	int scale = 35;
 	bool alive = life->getCell(x,y);
 	SDL_Rect cell {x*scale-x,y*scale-y,scale,scale};
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
@@ -224,10 +224,9 @@ void Game::debugPrintLifeTick()
 void Game::debugPrintAsciiLife()
 {
 	std::cout << "LIFE UPDATE !!! \nGeneration n°" << life->getGen() << std::endl;
-	int size = life->getSize();
-	for (int i = 0 ; i < size ; ++i)
+	for (int i = 0 ; i < life->getSize() ; ++i)
 	{
-		for (int j = 0 ; j < size ; ++j)
+		for (int j = 0 ; j < life->getSize() ; ++j)
 		{
 			if (life->getCell(j,i))
 			{

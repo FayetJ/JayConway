@@ -142,7 +142,7 @@ void Life::generatePreset(int preset)
 	switch(preset)
 	{
 		case 1:
-			createGlider(6,6);
+			createGlider(3,3);
 			break;
 
 		case 2:
