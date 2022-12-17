@@ -1,8 +1,9 @@
 #include "Life.hpp"
 
-Life::Life()
+Life::Life(Game* arg_game)
 {
-
+	game = arg_game;
+	menu = new(LifeMenu)(this,game);
 }
 
 void Life::init()
@@ -13,12 +14,11 @@ void Life::init()
 	m_oldGrid = m_grid;
 	m_generation = 0;
 	m_tick = 0;
-	m_running = true;
 	m_speed = 20;
 	generatePreset(preset);
 }
 
-void Life::update(Game* game)
+void Life::update()
 {
 	if (!m_frozen && !m_paused)
 	{
@@ -30,7 +30,7 @@ void Life::update(Game* game)
 	}
 }
 
-void Life::render(Game* game)
+void Life::render()
 {
 	bool alive = false;
 	int scale = 30;
@@ -119,7 +119,7 @@ void Life::toggleFrozen()
 
 void Life::togglePause()
 {
-	m_running = !m_running;
+	m_paused = !m_paused;
 }
 
 
@@ -177,6 +177,21 @@ void Life::generatePreset(int preset)
 		default:
 			break;
 	}
+}
+
+void Life::spaceAction()
+{
+	toggleFrozen();
+}
+
+void Life::rightAction()
+{
+	nextGen();
+}
+
+void Life::escapeAction()
+{
+	game->pushState(menu);
 }
 
 bool Life::getCell(int x, int y)

@@ -16,7 +16,7 @@ Game::~Game()
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen, int argTargetFps)
 {
-	inputManager = new(InputManager);
+	inputManager = new(InputManager)(this);
 	targetFps = argTargetFps;
 	deltan = std::chrono::duration<int, std::ratio<1,1000000000>> (1000000000/targetFps);
 	int flags = 0;
@@ -62,17 +62,48 @@ void Game::handleEvents()
 
 void Game::update()
 {
-	states.back()->update(this);
+	states.back()->update();
 }
 
 void Game::render()
 {
-	states.back()->render(this);
+	SDL_SetRenderDrawColor(renderer, 0,0,0,255);
+	SDL_RenderClear(renderer);
+	states.back()->render();
+	SDL_RenderPresent(renderer);
 }
 
 void Game::pushState(GameState* state)
 {
+	if (!states.empty())
+	{
+		states.back()->pause();
+	}
 	states.push_back(state);
+	states.back()->init();
+}
+
+void Game::popState()
+{
+	if (!states.empty())
+	{
+		states.back()->cleanup();
+		states.pop_back();
+	}
+	if (!states.empty())
+	{
+		states.back()->resume();
+	}
+	else
+	{
+		std::cout << "WARNING : Cant resume or pop state" << std::endl;
+	}
+}
+
+void Game::changeState(GameState* state)
+{
+	popState();
+	pushState(state);
 }
 
 GameState* Game::getCurrentState()

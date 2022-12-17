@@ -11,26 +11,20 @@
 
 Game *game = nullptr;
 
-void testFn(GameState* state)
-{
-
-}
-
 int main()
 {
-	std::cout << SDLK_BACKSPACE << std::endl;
-
 	int fps = 60;
 	game = new Game();
-	Life* life = new(Life);
-	testFn(life);
+	Life* life = new(Life)(game);
+	game->pushState(life);
 	game->init("Conway", 0, 0, 800, 600, false, fps);
 
 	while(game->running() == true)
 	{
 		game->update();
 		game->render();
-		SDL_Delay(12);
+		SDL_Delay(10);
+		game->handleEvents();
 		game->waitForFrame();
 	}
 	game->clean();

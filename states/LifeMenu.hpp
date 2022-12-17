@@ -5,15 +5,17 @@
 #include <array>
 #include <iostream>
 
+class Life;
+
 class LifeMenu : public GameState
 {
 public:
-	LifeMenu();
+	LifeMenu(Life* arg_life, Game* arg_game);
 
-	// Routine
-	void update(Game* game);
-	void render(Game* game);
-	void init(){};
+	// Boilerplate
+	void update();
+	void render();
+	void init();
 	void cleanup(){};
 	void pause(){};
 	void resume(){};
@@ -22,10 +24,16 @@ public:
 	void upAction(){};
 	void downAction(){};
 	void spaceAction(){};
-	void escapeAction(){};
+	void escapeAction();
 
 private:
-
+	Life* life = nullptr;
+	Game* game = nullptr;
+	SDL_Rect* fullscreenRect = nullptr;
+	SDL_Rect* menuRect = nullptr;
+	int scalex = 0;
+	int scaley = 0;
+	int selector = 0;
 };
 
 #endif // LIFEMENU_HPP

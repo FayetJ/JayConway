@@ -14,11 +14,11 @@ enum class Event
 class InputManager
 {
 public:
-	InputManager();
+	InputManager(Game* arg_game);
 	void handleEvents();
 
 private:
-	Game *game;
+	Game *game = nullptr;
 	static const int up = SDLK_UP;
 	static const int right = SDLK_RIGHT;
 	static const int space = SDLK_SPACE;

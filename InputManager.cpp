@@ -1,8 +1,8 @@
 #include "InputManager.hpp"
 
-InputManager::InputManager()
+InputManager::InputManager(Game* arg_game)
 {
-
+	game=arg_game;
 }
 
 void InputManager::handleEvents()
@@ -43,6 +43,10 @@ void InputManager::handleEvents()
 					break;
 
 			}
+		}
+		if (event.type == SDL_QUIT)
+		{
+			game->close();
 		}
 	}
 }

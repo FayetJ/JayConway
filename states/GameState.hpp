@@ -15,8 +15,8 @@ public:
 	virtual void resume() = 0;
 
 	// Routine
-	virtual void update(Game* game) = 0;
-	virtual void render(Game* game) = 0;
+	virtual void update() = 0;
+	virtual void render() = 0;
 
 	void changeState(Game* game, GameState* state)
 	{
@@ -29,7 +29,7 @@ public:
 	virtual void upAction() = 0;
 	virtual void downAction() = 0;
 	virtual void spaceAction() = 0;
-	virtual void escapeAction() = 0;
+	virtual void escapeAction(){};
 };
 
 #endif // GAMESTATE_HPP
