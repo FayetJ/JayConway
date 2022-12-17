@@ -22,7 +22,7 @@ int main()
 
 	int fps = 60;
 	game = new Game();
-	LifeMenu* life = new(LifeMenu);
+	Life* life = new(Life);
 	testFn(life);
 	game->init("Conway", 0, 0, 800, 600, false, fps);
 
