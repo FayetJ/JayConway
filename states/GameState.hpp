@@ -34,6 +34,8 @@ public:
 	virtual void moveDownAction() = 0;
 	virtual void moveLeftAction() = 0;
 	virtual void moveRightAction() = 0;
+	virtual void zoomUpAction() = 0;
+	virtual void zoomDownAction() = 0;
 	virtual void escapeAction(){};
 };
 

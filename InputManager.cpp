@@ -43,19 +43,27 @@ void InputManager::handleEvents()
 			}
 			if (event.key.keysym.sym == moveUp)
 			{
-				game->getCurrentState()->moveUpAction();
+				moveUpHeld = true;
 			}
 			else if (event.key.keysym.sym == moveDown)
 			{
-				game->getCurrentState()->moveDownAction();
+				moveDownHeld = true;
 			}
 			else if (event.key.keysym.sym == moveLeft)
 			{
-				game->getCurrentState()->moveLeftAction();
+				moveLeftHeld = true;
 			}
 			else if (event.key.keysym.sym == moveRight)
 			{
-				game->getCurrentState()->moveRightAction();
+				moveRightHeld = true;
+			}
+			else if (event.key.keysym.sym == zoomUp)
+			{
+				zoomUpHeld = true;
+			}
+			else if (event.key.keysym.sym == zoomDown)
+			{
+				zoomDownHeld = true;
 			}
 			else if (event.key.keysym.sym == enter)
 			{
@@ -63,9 +71,66 @@ void InputManager::handleEvents()
 			}
 
 		}
+		if (event.type == SDL_KEYUP)
+		{
+			if (event.key.keysym.sym == moveUp)
+			{
+				moveUpHeld = false;
+			}
+			else if (event.key.keysym.sym == moveDown)
+			{
+				moveDownHeld = false;
+			}
+			else if (event.key.keysym.sym == moveLeft)
+			{
+				moveLeftHeld = false;
+			}
+			else if (event.key.keysym.sym == moveRight)
+			{
+				moveRightHeld = false;
+			}
+			else if (event.key.keysym.sym == zoomUp)
+			{
+				zoomUpHeld = false;
+			}
+			else if (event.key.keysym.sym == zoomDown)
+			{
+				zoomDownHeld = false;
+			}
+		}
+
 		if (event.type == SDL_QUIT)
 		{
 			game->close();
 		}
+	}
+	sendHeldKeys();
+}
+
+void InputManager::sendHeldKeys()
+{
+	if (moveUpHeld)
+	{
+		game->getCurrentState()->moveUpAction();
+	}
+	if (moveDownHeld)
+	{
+		game->getCurrentState()->moveDownAction();
+	}
+	if (moveLeftHeld)
+	{
+		game->getCurrentState()->moveLeftAction();
+	}
+	if (moveRightHeld)
+	{
+		game->getCurrentState()->moveRightAction();
+	}
+	if (zoomUpHeld)
+	{
+		game->getCurrentState()->zoomUpAction();
+	}
+	if (zoomDownHeld)
+	{
+		game->getCurrentState()->zoomDownAction();
 	}
 }

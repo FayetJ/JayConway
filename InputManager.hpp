@@ -16,9 +16,12 @@ class InputManager
 public:
 	InputManager(Game* arg_game);
 	void handleEvents();
+	void sendHeldKeys();
 
 private:
 	Game *game = nullptr;
+
+	// INPUTS
 	static const int up = SDLK_UP;
 	static const int down = SDLK_DOWN;
 	static const int right = SDLK_RIGHT;
@@ -30,6 +33,16 @@ private:
 	int moveDown = SDLK_s;
 	int moveLeft = SDLK_q;
 	int moveRight = SDLK_d;
+	int zoomUp = SDLK_UP;
+	int zoomDown = SDLK_DOWN;
+
+	// KEY MEMORY
+	bool moveUpHeld = false;
+	bool moveDownHeld = false;
+	bool moveLeftHeld = false;
+	bool moveRightHeld = false;
+	bool zoomUpHeld = false;
+	bool zoomDownHeld = false;
 };
 
 #endif // INPUTMANAGER_HPP

@@ -33,7 +33,6 @@ void Life::update()
 void Life::render()
 {
 	bool alive = false;
-	int scale = 30;
 	int w = 0;
 		int h = 0;
 		SDL_GetWindowSize(game->window,&w,&h);
@@ -212,6 +211,16 @@ void Life::moveLeftAction()
 void Life::moveRightAction()
 {
 	++offset.x;
+}
+
+void Life::zoomDownAction()
+{
+	--scale;
+}
+
+void Life::zoomUpAction()
+{
+	++scale;
 }
 
 bool Life::getCell(int x, int y)

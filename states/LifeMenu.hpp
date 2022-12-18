@@ -31,6 +31,8 @@ public:
 	void moveDownAction(){};
 	void moveLeftAction(){};
 	void moveRightAction(){};
+	void zoomUpAction(){};
+	void zoomDownAction(){};
 	void enterAction(){};
 
 private:

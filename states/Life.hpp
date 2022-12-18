@@ -31,6 +31,8 @@ public:
 	void moveDownAction();
 	void moveLeftAction();
 	void moveRightAction();
+	void zoomUpAction();
+	void zoomDownAction();
 	void enterAction();
 
 	// Get/Set
@@ -54,6 +56,7 @@ public:
 
 
 private:
+	int scale = 30;
 	SDL_Point offset = SDL_Point{0,0};
 	Game* game = nullptr;
 	LifeMenu* menu = nullptr;
