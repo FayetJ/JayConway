@@ -14,15 +14,11 @@ void InputManager::handleEvents()
 		{
 			switch(event.key.keysym.sym)
 			{
-				case SDLK_RETURN:
-
-					break;
-
 				case up:
 					game->getCurrentState()->upAction();
 					break;
 
-				case SDLK_DOWN:
+				case down:
 					game->getCurrentState()->downAction();
 					break;
 
@@ -30,7 +26,7 @@ void InputManager::handleEvents()
 					game->getCurrentState()->rightAction();
 					break;
 
-				case SDLK_LEFT:
+				case left:
 					game->getCurrentState()->leftAction();
 					break;
 
@@ -42,7 +38,30 @@ void InputManager::handleEvents()
 					game->getCurrentState()->escapeAction();
 					break;
 
+				default:
+					break;
 			}
+			if (event.key.keysym.sym == moveUp)
+			{
+				game->getCurrentState()->moveUpAction();
+			}
+			else if (event.key.keysym.sym == moveDown)
+			{
+				game->getCurrentState()->moveDownAction();
+			}
+			else if (event.key.keysym.sym == moveLeft)
+			{
+				game->getCurrentState()->moveLeftAction();
+			}
+			else if (event.key.keysym.sym == moveRight)
+			{
+				game->getCurrentState()->moveRightAction();
+			}
+			else if (event.key.keysym.sym == enter)
+			{
+				game->getCurrentState()->enterAction();
+			}
+
 		}
 		if (event.type == SDL_QUIT)
 		{

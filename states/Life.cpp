@@ -42,7 +42,7 @@ void Life::render()
 			for (int j = 0 ; j<getSize() ; ++j)
 			{
 				alive = getCell(i,j);
-				SDL_Rect cell {i*scale-i,j*scale-j,scale,scale};
+				SDL_Rect cell {(i*scale-i)+offset.x,(j*scale-j)+offset.y,scale,scale};
 				SDL_SetRenderDrawColor(game->renderer, 255, 255, 255, 255);
 				if (alive)
 				{
@@ -184,7 +184,7 @@ void Life::spaceAction()
 	toggleFrozen();
 }
 
-void Life::rightAction()
+void Life::enterAction()
 {
 	nextGen();
 }
@@ -192,6 +192,26 @@ void Life::rightAction()
 void Life::escapeAction()
 {
 	game->pushState(menu);
+}
+
+void Life::moveUpAction()
+{
+	--offset.y;
+}
+
+void Life::moveDownAction()
+{
+	++offset.y;
+}
+
+void Life::moveLeftAction()
+{
+	--offset.x;
+}
+
+void Life::moveRightAction()
+{
+	++offset.x;
 }
 
 bool Life::getCell(int x, int y)

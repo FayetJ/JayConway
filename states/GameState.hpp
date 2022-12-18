@@ -29,6 +29,11 @@ public:
 	virtual void upAction() = 0;
 	virtual void downAction() = 0;
 	virtual void spaceAction() = 0;
+	virtual void enterAction() = 0;
+	virtual void moveUpAction() = 0;
+	virtual void moveDownAction() = 0;
+	virtual void moveLeftAction() = 0;
+	virtual void moveRightAction() = 0;
 	virtual void escapeAction(){};
 };
 

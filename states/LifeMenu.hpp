@@ -19,12 +19,19 @@ public:
 	void cleanup(){};
 	void pause(){};
 	void resume(){};
+
+	// Inputs
 	void rightAction(){};
 	void leftAction(){};
 	void upAction(){};
 	void downAction(){};
 	void spaceAction(){};
 	void escapeAction();
+	void moveUpAction(){};
+	void moveDownAction(){};
+	void moveLeftAction(){};
+	void moveRightAction(){};
+	void enterAction(){};
 
 private:
 	Life* life = nullptr;

@@ -19,12 +19,19 @@ public:
 	void cleanup(){};
 	void pause(){};
 	void resume(){};
-	void rightAction();
+
+	// Inputs
+	void rightAction(){};
 	void leftAction(){};
 	void upAction(){};
 	void downAction(){};
 	void spaceAction();
 	void escapeAction();
+	void moveUpAction();
+	void moveDownAction();
+	void moveLeftAction();
+	void moveRightAction();
+	void enterAction();
 
 	// Get/Set
 	bool getCell(int x, int y);
@@ -47,6 +54,7 @@ public:
 
 
 private:
+	SDL_Point offset = SDL_Point{0,0};
 	Game* game = nullptr;
 	LifeMenu* menu = nullptr;
 	static constexpr int arraySize=24; // Compile-time constant very baaaad
