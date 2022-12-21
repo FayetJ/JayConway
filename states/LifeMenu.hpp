@@ -40,6 +40,8 @@ public:
 private:
 	TTF_Font *font = nullptr;
 	SDL_Color color = SDL_Color{255,255,255};
+	std::array<SDL_Texture*,5> unselected;
+	std::array<SDL_Texture*,5> selected;
 	Life* life = nullptr;
 	Game* game = nullptr;
 	SDL_Rect* fullscreenRect = nullptr;

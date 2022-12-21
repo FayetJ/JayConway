@@ -7,7 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(EXECUTABLE_NAME "conway")
 set(sources Game.hpp Game.cpp states/Life.hpp states/Life.cpp InputManager.hpp InputManager.cpp states/GameState.hpp
-    states/monobold.ttf states/GameState.cpp states/LifeMenu.hpp states/LifeMenu.cpp)
+    states/monobold.ttf states/GameState.cpp states/LifeMenu.hpp states/LifeMenu.cpp
+    )
 add_executable(conway main.cpp ${sources})
 
 install(TARGETS conway

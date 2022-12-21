@@ -5,12 +5,11 @@ LifeMenu::LifeMenu(Life* arg_life, Game* arg_game)
 {
 	life = arg_life;
 	game = arg_game;
-	font = TTF_OpenFont("monobold.ttf",50);
 }
 
 void LifeMenu::init()
 {
-
+	font = TTF_OpenFont("monobold.ttf",26);
 }
 
 void LifeMenu::update()
@@ -20,10 +19,6 @@ void LifeMenu::update()
 
 void LifeMenu::render()
 {
-	SDL_Surface * surface = TTF_RenderText_Solid(font,
-	  "DOING", color);
-	SDL_Texture * texture = SDL_CreateTextureFromSurface(game->renderer,
-	  surface);
 	int w,h;
 	SDL_GetWindowSize(game->window, &w, &h);
 	scalex = int(w/2);
@@ -38,11 +33,13 @@ void LifeMenu::render()
 	life->render();
 	SDL_SetRenderDrawColor(game->renderer, 0, 0, 0, 100);
 	SDL_RenderFillRect(game->renderer, fullscreenRect);
+
 	SDL_SetRenderDrawColor(game->renderer,255,0,0,125);
 	SDL_RenderFillRect(game->renderer, menuRect);
-	SDL_RenderCopy(game->renderer, texture, NULL, menuRect);
-	SDL_DestroyTexture(texture);
-	SDL_FreeSurface(surface);
+
+	SDL_Surface* surfaceMessage = TTF_RenderText_Solid(font, "put your text here", color);
+	SDL_Texture* Message = SDL_CreateTextureFromSurface(game->renderer, surfaceMessage);
+	SDL_RenderCopy(game->renderer, Message, NULL, menuRect);
 }
 
 void LifeMenu::escapeAction()
