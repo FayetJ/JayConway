@@ -68,6 +68,7 @@ private:
 	bool m_paused = false;
 	std::array<std::array<bool,arraySize>,arraySize> m_grid;
 	std::array<std::array<bool,arraySize>,arraySize> m_oldGrid;
+	std::vector<std::vector<bool>> lol;
 };
 
 #endif // LIFE_HPP

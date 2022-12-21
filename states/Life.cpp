@@ -195,32 +195,38 @@ void Life::escapeAction()
 
 void Life::moveUpAction()
 {
-	--offset.y;
+	offset.y -= 4;
 }
 
 void Life::moveDownAction()
 {
-	++offset.y;
+	offset.y += 4;
 }
 
 void Life::moveLeftAction()
 {
-	--offset.x;
+	offset.x -= 4;
 }
 
 void Life::moveRightAction()
 {
-	++offset.x;
+	offset.x += 4;
 }
 
 void Life::zoomDownAction()
 {
-	--scale;
+	if (scale >= 5)
+	{
+		--scale;
+	}
 }
 
 void Life::zoomUpAction()
 {
-	++scale;
+	if (scale <= 60)
+	{
+		++scale;
+	}
 }
 
 bool Life::getCell(int x, int y)
