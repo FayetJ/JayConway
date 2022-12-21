@@ -2,6 +2,7 @@
 #define GAME_HPP
 
 #include "SDL2/SDL.h"
+#include "SDL_ttf.h"
 #include <stdio.h>
 #include <iostream>
 #include <chrono>

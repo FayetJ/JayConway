@@ -27,6 +27,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	}
 	if(!SDL_Init(SDL_INIT_EVERYTHING))
 	{
+		TTF_Init();
 		std::cout << "Subsystems initialized..." << std::endl;
 		window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
 		if (window)
@@ -120,6 +121,7 @@ void Game::clean()
 {
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
+	TTF_Quit();
 	SDL_Quit();
 	std::cout << "Game closed" << std::endl;
 }

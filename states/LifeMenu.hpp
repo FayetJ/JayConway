@@ -2,6 +2,8 @@
 #define LIFEMENU_HPP
 
 #include "GameState.hpp"
+#include "SDL2/SDL.h"
+#include "SDL_ttf.h"
 #include <array>
 #include <iostream>
 
@@ -36,6 +38,8 @@ public:
 	void enterAction(){};
 
 private:
+	TTF_Font *font = nullptr;
+	SDL_Color color = SDL_Color{255,255,255};
 	Life* life = nullptr;
 	Game* game = nullptr;
 	SDL_Rect* fullscreenRect = nullptr;
