@@ -1,4 +1,6 @@
 #include "Game.hpp"
+#include "GameState.hpp"
+#include "InputManager.hpp"
 
 Game::Game()
 {
@@ -14,9 +16,7 @@ Game::~Game()
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen, int argTargetFps)
 {
-	state = State::mainMenu;
-	life = new Life();
-	life->init(1);
+	inputManager = new(InputManager)(this);
 	targetFps = argTargetFps;
 	deltan = std::chrono::duration<int, std::ratio<1,1000000000>> (1000000000/targetFps);
 	int flags = 0;
@@ -27,6 +27,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	}
 	if(!SDL_Init(SDL_INIT_EVERYTHING))
 	{
+		TTF_Init();
 		std::cout << "Subsystems initialized..." << std::endl;
 		window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
 		if (window)
@@ -57,145 +58,58 @@ void Game::waitForFrame()
 
 void Game::handleEvents()
 {
-	SDL_Event event;
-	while (SDL_PollEvent(&event))
-	{
-		if (event.type == SDL_QUIT)
-		{
-			isRunning=false;
-		}
-
-		if (event.type == SDL_KEYDOWN)
-		{
-			switch (state)
-			{
-				case State::running:
-					switch(event.key.keysym.sym)
-					{
-						case SDLK_SPACE:
-							life->toggleFrozen();
-							break;
-
-						case SDLK_ESCAPE:
-							life->pauseGame(true);
-							state = State::pauseMenu;
-							break;
-
-						case SDLK_RIGHT:
-							life->nextGen();
-							break;
-
-						default:
-							break;
-					}
-					break;
-
-				case State::mainMenu:
-					switch(event.key.keysym.sym)
-					{
-						case SDLK_RETURN:
-							life->init(2);
-							state = State::running;
-							break;
-						default:
-							break;
-					}
-					break;
-
-				case State::pauseMenu:
-					switch(event.key.keysym.sym)
-					{
-						case SDLK_ESCAPE:
-							life->pauseGame(false);
-							state = State::running;
-							break;
-						default:
-							break;
-					}
-					break;
-				default:
-					break;
-
-			}
-
-		}
-	}
+	inputManager->handleEvents();
 }
 
 void Game::update()
 {
-	life->update();
-	++currentTick;
-}
-
-void Game::drawCell(int x, int y)
-{
-	int scale = 35;
-	bool alive = life->getCell(x,y);
-	SDL_Rect cell {x*scale-x,y*scale-y,scale,scale};
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-	if (alive)
-	{
-		SDL_RenderFillRect(renderer,&cell);
-	}
-	else if(!alive)
-	{
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-		SDL_RenderFillRect(renderer,&cell);
-	}
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-	SDL_RenderDrawRect(renderer,&cell);
+	states.back()->update();
 }
 
 void Game::render()
 {
-	setFullscreenRect();
 	SDL_SetRenderDrawColor(renderer, 0,0,0,255);
 	SDL_RenderClear(renderer);
-	renderLife();
-	switch (state)
-	{
-		case State::mainMenu:
-			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 100);
-			SDL_RenderFillRect(renderer, fullscreenRect);
-			break;
-
-		case State::running:
-			break;
-
-		case State::pauseMenu:
-			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 100);
-			SDL_RenderFillRect(renderer, fullscreenRect);
-			break;
-
-		case State::settingsMenu:
-			break;
-	}
+	states.back()->render();
 	SDL_RenderPresent(renderer);
 }
 
-void Game::renderLife()
+void Game::pushState(GameState* state)
 {
-	int w = 0;
-	int h = 0;
-	SDL_GetWindowSize(window,&w,&h);
-	for (int i = 0 ; i<life->getSize() ; ++i)
+	if (!states.empty())
 	{
-		for (int j = 0 ; j<life->getSize() ; ++j)
-		{
-			drawCell(i,j);
-		}
+		states.back()->pause();
 	}
-
+	states.push_back(state);
+	states.back()->init();
 }
 
-void Game::setFullscreenRect()
+void Game::popState()
 {
-	int w,h;
-	SDL_GetWindowSize(window, &w, &h);
-	delete fullscreenRect;
-	fullscreenRect = nullptr;
-	fullscreenRect = new SDL_Rect{0,0,w,h};
+	if (!states.empty())
+	{
+		states.back()->cleanup();
+		states.pop_back();
+	}
+	if (!states.empty())
+	{
+		states.back()->resume();
+	}
+	else
+	{
+		std::cout << "WARNING : Cant resume or pop state" << std::endl;
+	}
+}
+
+void Game::changeState(GameState* state)
+{
+	popState();
+	pushState(state);
+}
+
+GameState* Game::getCurrentState()
+{
+	return states.back();
 }
 
 void Game::close()
@@ -207,70 +121,7 @@ void Game::clean()
 {
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
+	TTF_Quit();
 	SDL_Quit();
 	std::cout << "Game closed" << std::endl;
 }
-
-void Game::debugPrintTick()
-{
-	std::cout << "Current tick : " << currentTick << std::endl;
-}
-
-void Game::debugPrintLifeTick()
-{
-	std::cout << "Life tick : " << life->getGen() << std::endl;
-}
-
-void Game::debugPrintAsciiLife()
-{
-	std::cout << "LIFE UPDATE !!! \nGeneration n°" << life->getGen() << std::endl;
-	for (int i = 0 ; i < life->getSize() ; ++i)
-	{
-		for (int j = 0 ; j < life->getSize() ; ++j)
-		{
-			if (life->getCell(j,i))
-			{
-				std::cout << "0";
-			}
-			else
-			{
-				std::cout << ".";
-			}
-		}
-		std::cout << std::endl;
-	}
-	std::cout << "\n \n \n";
-}
-
-void Game::debugConsole()
-{
-
-}
-
-void Game::debugPrintNeighbors(int x, int y)
-{
-	int size = life->getSize();
-	int xp = (x+1)%size;
-	int yp = (y+1)%size;
-	int ym = ((y-1) % size + size) % size;
-	int xm = ((x-1) % size + size) % size;
-	std::cout << "Neighbors of [" << x << "][" << y << "]\n"
-			  << "[" << xm << "][" << ym << "] "
-			  << "[" << x << "][" << ym << "] "
-			  << "[" << xp << "][" << ym << "] \n"
-			  << "[" << xm << "][" << y << "] "
-			  << "[" << xp << "][" << y << "] \n"
-			  << "[" << xm << "][" << yp << "] "
-			  << "[" << x << "][" << yp << "] "
-			  << "[" << xp << "][" << yp << "] \n"
-			  << std::endl;
-}
-
-void Game::debugPrintLagSinceBegin() // Marginally working
-{
-	std::chrono::duration<int, std::ratio<1,1000000000>> timeSinceStart = currentTime - startTime;
-	long int lag = timeSinceStart.count() - (currentTick*16666666);
-	std::cout << lag << std::endl;
-}
-
-

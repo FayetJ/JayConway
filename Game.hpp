@@ -2,20 +2,16 @@
 #define GAME_HPP
 
 #include "SDL2/SDL.h"
+#include "SDL_ttf.h"
 #include <stdio.h>
 #include <iostream>
 #include <chrono>
 #include <ratio>
 #include <array>
 #include <vector>
-#include "Life.hpp"
-
-struct Point {
-	int x;
-	int y;
-};
 
 class GameState;
+class InputManager;
 
 class Game
 {
@@ -33,54 +29,41 @@ public:
 	void render();
 	void clean();
 
-	void ChangeState(GameState* state);
-	void PushState(GameState* state);
-	void PopState();
+	// State Handling
+	void changeState(GameState* state);
+	void pushState(GameState* state);
+	void popState();
+	GameState* getCurrentState();
 
 	// Commands
 
 
 	// Rendering
-	void renderLife();
-	void drawCell(int x, int y);
-	void setFullscreenRect();
 
 	// Cleanup
 	void close();
 
 	// Debug
-	void debugPrintTick();
-	void debugPrintLagSinceBegin();
-	void debugPrintLifeTick();
-	void debugPrintAsciiLife();
-	void debugConsole();
-	void debugInit();
-	void debugPrintNeighbors(int x, int y);
 
 	bool running() {return isRunning;}
 
-private:
-	enum class State
-	{
-		mainMenu,
-		pauseMenu,
-		settingsMenu,
-		running,
-	};
+	SDL_Window* window;
+	SDL_Renderer* renderer;
 
-	std::vector<GameState*> states;
-	SDL_Rect* fullscreenRect = nullptr;
-	State state;
+private:
+	// Window Handling
 	bool isRunning;
+
+	// Time Handling
 	std::chrono::steady_clock::time_point startTime;
 	std::chrono::steady_clock::time_point beginTime;
 	std::chrono::steady_clock::time_point currentTime;
+	std::chrono::duration<int, std::ratio<1,1000000000>> deltan;
+
+	InputManager* inputManager;
+	std::vector<GameState*> states;
 	int currentTick;
 	int targetFps;
-	std::chrono::duration<int, std::ratio<1,1000000000>> deltan;
-	SDL_Window* window;
-	SDL_Renderer* renderer;
-	Life* life = nullptr;
 };
 
 #endif // GAME_HPP
