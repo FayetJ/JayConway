@@ -9,8 +9,8 @@ Life::Life(Game* arg_game)
 void Life::init()
 {
 	int preset=1;
-	m_grid[0].fill(false);
-	m_grid.fill(m_grid[0]);
+	resizeGrid(size.x,size.y);
+	resizeGrid(10,30);
 	m_oldGrid = m_grid;
 	m_generation = 0;
 	m_tick = 0;
@@ -36,9 +36,9 @@ void Life::render()
 	int w = 0;
 		int h = 0;
 		SDL_GetWindowSize(game->window,&w,&h);
-		for (int i = 0 ; i<getSize() ; ++i)
+		for (int i = 0 ; i<size.x ; ++i)
 		{
-			for (int j = 0 ; j<getSize() ; ++j)
+			for (int j = 0 ; j<size.y ; ++j)
 			{
 				alive = getCell(i,j);
 				SDL_Rect cell {(i*scale-i)+offset.x,(j*scale-j)+offset.y,scale,scale};
@@ -64,14 +64,14 @@ void Life::nextGen()
 	int neighbors = 0;
 	int xp,xm,yp,ym = 0;
 	m_oldGrid = m_grid;
-	for (int x=0; x<arraySize; ++x)
+	for (int x=0; x<size.x; ++x)
 	{
-		xp = (x+1)%arraySize;
-		xm = ((x-1) % arraySize + arraySize) % arraySize;
-		for (int y=0; y<arraySize; ++y)
+		xp = (x+1)%size.x;
+		xm = ((x-1) % size.x + size.x) % size.x;
+		for (int y=0; y<size.y; ++y)
 		{
-			yp = (y+1)%arraySize;
-			ym = ((y-1) % arraySize + arraySize) % arraySize;
+			yp = (y+1)%size.y;
+			ym = ((y-1) % size.y + size.y) % size.y;
 
 			neighbors = m_oldGrid[xp][yp] + m_oldGrid[xm][ym] +
 					m_oldGrid[xp][y] + m_oldGrid[x][yp] +
@@ -121,6 +121,16 @@ void Life::togglePause()
 	m_paused = !m_paused;
 }
 
+void Life::resizeGrid(int x, int y)
+{
+	m_grid.resize(x);
+	for (int i=0; i<x; ++i)
+	{
+		m_grid[i].resize(y,false);
+	}
+	size.x = x;
+	size.y = y;
+}
 
 int Life::createGlider(int x, int y)
 {
@@ -195,22 +205,22 @@ void Life::escapeAction()
 
 void Life::moveUpAction()
 {
-	offset.y -= 4;
+	offset.y += 4;
 }
 
 void Life::moveDownAction()
 {
-	offset.y += 4;
+	offset.y -= 4;
 }
 
 void Life::moveLeftAction()
 {
-	offset.x -= 4;
+	offset.x += 4;
 }
 
 void Life::moveRightAction()
 {
-	offset.x += 4;
+	offset.x -= 4;
 }
 
 void Life::zoomDownAction()
@@ -232,11 +242,6 @@ void Life::zoomUpAction()
 bool Life::getCell(int x, int y)
 {
 	return m_grid[x][y];
-}
-
-int Life::getSize()
-{
-	return arraySize;
 }
 
 int Life::getGen()

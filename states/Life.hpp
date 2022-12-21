@@ -37,7 +37,6 @@ public:
 
 	// Get/Set
 	bool getCell(int x, int y);
-	int getSize();
 	int getGen();
 	void setSpeed(int ticksPerGen);
 
@@ -48,6 +47,9 @@ public:
 	void toggleFrozen();
 	void togglePause();
 	void generatePreset(int preset);
+
+	// Grid
+	void resizeGrid(int x, int y);
 
 	// Create Shapes
 	int createGlider(int x, int y);
@@ -60,15 +62,15 @@ private:
 	SDL_Point offset = SDL_Point{0,0};
 	Game* game = nullptr;
 	LifeMenu* menu = nullptr;
-	static constexpr int arraySize=24; // Compile-time constant very baaaad
 	int m_speed = 20;
 	int m_generation = 0;
 	int m_tick = 0;
 	bool m_frozen = false;
 	bool m_paused = false;
-	std::array<std::array<bool,arraySize>,arraySize> m_grid;
-	std::array<std::array<bool,arraySize>,arraySize> m_oldGrid;
-	std::vector<std::vector<bool>> lol;
+	SDL_Point size = SDL_Point{20,20};
+	std::vector<std::vector<bool>> m_grid;
+	std::vector<std::vector<bool>> m_oldGrid;
+
 };
 
 #endif // LIFE_HPP
