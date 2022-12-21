@@ -1,8 +1,8 @@
 #include "InputManager.hpp"
 
-InputManager::InputManager()
+InputManager::InputManager(Game* arg_game)
 {
-
+	game=arg_game;
 }
 
 void InputManager::handleEvents()
@@ -14,36 +14,123 @@ void InputManager::handleEvents()
 		{
 			switch(event.key.keysym.sym)
 			{
-				case SDLK_RETURN:
-
+				case up:
+					game->getCurrentState()->upAction();
 					break;
 
-				case SDLK_UP:
+				case down:
+					game->getCurrentState()->downAction();
 					break;
 
-				case SDLK_DOWN:
+				case right:
+					game->getCurrentState()->rightAction();
 					break;
 
-				case SDLK_RIGHT:
+				case left:
+					game->getCurrentState()->leftAction();
 					break;
 
-				case SDLK_LEFT:
+				case space:
+					game->getCurrentState()->spaceAction();
 					break;
 
-				case SDLK_SPACE:
-					//sendEvent(Event::pause);
+				case escape:
+					game->getCurrentState()->escapeAction();
 					break;
 
-				case SDLK_ESCAPE:
+				default:
 					break;
+			}
+			if (event.key.keysym.sym == moveUp)
+			{
+				moveUpHeld = true;
+			}
+			else if (event.key.keysym.sym == moveDown)
+			{
+				moveDownHeld = true;
+			}
+			else if (event.key.keysym.sym == moveLeft)
+			{
+				moveLeftHeld = true;
+			}
+			else if (event.key.keysym.sym == moveRight)
+			{
+				moveRightHeld = true;
+			}
+			else if (event.key.keysym.sym == zoomUp)
+			{
+				zoomUpHeld = true;
+			}
+			else if (event.key.keysym.sym == zoomDown)
+			{
+				zoomDownHeld = true;
+			}
+			else if (event.key.keysym.sym == enter)
+			{
+				game->getCurrentState()->enterAction();
+			}
 
+		}
+		if (event.type == SDL_KEYUP)
+		{
+			if (event.key.keysym.sym == moveUp)
+			{
+				moveUpHeld = false;
+			}
+			else if (event.key.keysym.sym == moveDown)
+			{
+				moveDownHeld = false;
+			}
+			else if (event.key.keysym.sym == moveLeft)
+			{
+				moveLeftHeld = false;
+			}
+			else if (event.key.keysym.sym == moveRight)
+			{
+				moveRightHeld = false;
+			}
+			else if (event.key.keysym.sym == zoomUp)
+			{
+				zoomUpHeld = false;
+			}
+			else if (event.key.keysym.sym == zoomDown)
+			{
+				zoomDownHeld = false;
 			}
 		}
-	}
 
+		if (event.type == SDL_QUIT)
+		{
+			game->close();
+		}
+	}
+	sendHeldKeys();
 }
 
-Event InputManager::getEvent(SDL_Event sdlEvent)
+void InputManager::sendHeldKeys()
 {
-	return Event::up;
+	if (moveUpHeld)
+	{
+		game->getCurrentState()->moveUpAction();
+	}
+	if (moveDownHeld)
+	{
+		game->getCurrentState()->moveDownAction();
+	}
+	if (moveLeftHeld)
+	{
+		game->getCurrentState()->moveLeftAction();
+	}
+	if (moveRightHeld)
+	{
+		game->getCurrentState()->moveRightAction();
+	}
+	if (zoomUpHeld)
+	{
+		game->getCurrentState()->zoomUpAction();
+	}
+	if (zoomDownHeld)
+	{
+		game->getCurrentState()->zoomDownAction();
+	}
 }
