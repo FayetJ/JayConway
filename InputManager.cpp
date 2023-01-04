@@ -38,6 +38,9 @@ void InputManager::handleEvents()
 					game->getCurrentState()->escapeAction();
 					break;
 
+				case clear:
+					game->getCurrentState()->clear();
+
 				default:
 					break;
 			}

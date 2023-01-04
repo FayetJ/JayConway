@@ -37,6 +37,7 @@ public:
 	void zoomUpAction(){};
 	void zoomDownAction(){};
 	void enterAction(){};
+	void clear(){};
 
 	void click(int x, int y){};
 

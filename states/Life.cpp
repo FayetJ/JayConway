@@ -241,10 +241,26 @@ void Life::zoomUpAction()
 	}
 }
 
+void Life::clear()
+{
+	clearGrid();
+}
+
 void Life::click(int x, int y)
 {
 	getIndex(&x,&y);
 	swapCell(x,y);
+}
+
+void Life::clearGrid()
+{
+	for (int i=0; i<m_grid.size(); ++i)
+	{
+		for (int j=0; j<m_grid[0].size(); ++j)
+		{
+			m_grid[i][j] = false;
+		}
+	}
 }
 
 void Life::getIndex(int *x, int *y)

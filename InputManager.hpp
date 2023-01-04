@@ -28,6 +28,7 @@ private:
 	static const int left = SDLK_LEFT;
 	static const int space = SDLK_SPACE;
 	static const int escape = SDLK_ESCAPE;
+	static const int clear = SDLK_DELETE;
 	int enter = SDLK_RETURN;
 	int moveUp = SDLK_z;
 	int moveDown = SDLK_s;

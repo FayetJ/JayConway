@@ -37,6 +37,7 @@ public:
 	virtual void zoomUpAction() = 0;
 	virtual void zoomDownAction() = 0;
 	virtual void escapeAction(){};
+	virtual void clear() = 0;
 
 	// Mouse Inputs
 	virtual void click(int x, int y) = 0;

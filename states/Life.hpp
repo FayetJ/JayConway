@@ -34,6 +34,7 @@ public:
 	void zoomUpAction();
 	void zoomDownAction();
 	void enterAction();
+	void clear();
 
 	void click(int x, int y);
 
@@ -54,6 +55,7 @@ public:
 	void resizeGrid(int x, int y);
 	void getIndex(int *x, int *y);
 	void swapCell(int x, int y);
+	void clearGrid();
 
 	// Create Shapes
 	int createGlider(int x, int y);
