@@ -249,8 +249,8 @@ void Life::click(int x, int y)
 
 void Life::getIndex(int *x, int *y)
 {
-	*x = int((*x)/(scale-1));
-	*y = int((*y)/(scale-1));
+	*x = int((*x - offset.x)/(scale-1));
+	*y = int((*y - offset.y)/(scale-1));
 }
 
 void Life::swapCell(int x, int y)
