@@ -23,7 +23,7 @@ public:
 		game->changeState(state);
 	}
 
-	// Inputs
+	// KB Inputs
 	virtual void rightAction() = 0;
 	virtual void leftAction() = 0;
 	virtual void upAction() = 0;
@@ -37,6 +37,9 @@ public:
 	virtual void zoomUpAction() = 0;
 	virtual void zoomDownAction() = 0;
 	virtual void escapeAction(){};
+
+	// Mouse Inputs
+	virtual void click(int x, int y) = 0;
 };
 
 #endif // GAMESTATE_HPP

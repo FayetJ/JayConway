@@ -99,6 +99,13 @@ void InputManager::handleEvents()
 			}
 		}
 
+		if (event.type == SDL_MOUSEBUTTONDOWN)
+		{
+			int x,y;
+			SDL_GetMouseState(&x,&y);
+			game->getCurrentState()->click(x,y);
+		}
+
 		if (event.type == SDL_QUIT)
 		{
 			game->close();

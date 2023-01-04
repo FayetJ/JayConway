@@ -8,13 +8,13 @@ Life::Life(Game* arg_game)
 
 void Life::init()
 {
-	int preset=1;
+	int preset=0;
 	resizeGrid(size.x,size.y);
-	resizeGrid(10,30);
+	resizeGrid(80,30);
 	m_oldGrid = m_grid;
 	m_generation = 0;
 	m_tick = 0;
-	m_speed = 20;
+	m_speed = 10;
 	generatePreset(preset);
 }
 
@@ -175,6 +175,8 @@ void Life::generatePreset(int preset)
 {
 	switch(preset)
 	{
+		case 0:
+			break;
 		case 1:
 			createGlider(3,3);
 			break;
@@ -236,6 +238,26 @@ void Life::zoomUpAction()
 	if (scale <= 60)
 	{
 		++scale;
+	}
+}
+
+void Life::click(int x, int y)
+{
+	getIndex(&x,&y);
+	swapCell(x,y);
+}
+
+void Life::getIndex(int *x, int *y)
+{
+	*x = int((*x)/(scale-1));
+	*y = int((*y)/(scale-1));
+}
+
+void Life::swapCell(int x, int y)
+{
+	if ((y < m_grid[0].size() && y>=0) && (x < m_grid.size() && x>=0) )
+	{
+		m_grid[x][y] = !m_grid[x][y];
 	}
 }
 

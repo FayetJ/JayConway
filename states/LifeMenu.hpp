@@ -4,6 +4,7 @@
 #include "GameState.hpp"
 #include "SDL2/SDL.h"
 #include "SDL_ttf.h"
+#include <string.h>
 #include <array>
 #include <iostream>
 
@@ -25,8 +26,8 @@ public:
 	// Inputs
 	void rightAction(){};
 	void leftAction(){};
-	void upAction(){};
-	void downAction(){};
+	void upAction();
+	void downAction();
 	void spaceAction(){};
 	void escapeAction();
 	void moveUpAction(){};
@@ -37,17 +38,27 @@ public:
 	void zoomDownAction(){};
 	void enterAction(){};
 
+	void click(int x, int y){};
+
+	// Menu Display
+	void displayEntry(int n, int x, int y, bool selected);
+	void displayBg();
+	void displayEntries();
+
 private:
 	TTF_Font *font = nullptr;
 	SDL_Color color = SDL_Color{255,255,255};
-	std::array<SDL_Texture*,5> unselected;
-	std::array<SDL_Texture*,5> selected;
+	std::array<SDL_Texture*,5> t_unselected;
+	std::array<SDL_Texture*,5> t_selected;
+	std::array<std::string,5> a_texts;
 	Life* life = nullptr;
 	Game* game = nullptr;
 	SDL_Rect* fullscreenRect = nullptr;
 	SDL_Rect* menuRect = nullptr;
 	int scalex = 0;
 	int scaley = 0;
+	int tscalex = 0;
+	int tscaley = 0;
 	int selector = 0;
 };
 
