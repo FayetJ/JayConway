@@ -8,7 +8,6 @@ LifeSettings::LifeSettings(Life* arg_life, Game* arg_game)
 	game = arg_game;
 	a_texts.resize(3);
 	values.resize(3);
-	//values = {life->getSpeed(),life->getHeight(),life->getWidth()};
 	values = {life->getSpeed(),life->getHeight(),life->getWidth()};
 	a_texts = {"Ticks per update", "Height", "Width"};
 }
@@ -25,18 +24,27 @@ void LifeSettings::testNumber()
 
 void LifeSettings::rightAction()
 {
-	values[selector]++;
+	if (values[selector] < 1000)
+	{
+		values[selector]++;
+	}
 }
 
 void LifeSettings::leftAction()
 {
-	values[selector]--;
+	if(values[selector]>1)
+	{
+		values[selector]--;
+	}
 }
 
 void LifeSettings::escapeAction()
 {
 	life->setSpeed(values[0]);
-	life->setHeight(values[1]);
-	life->setWidth(values[2]);
+	if (life->getHeight() != values[1] || life->getWidth() != values[2])
+	{
+		life->setHeight(values[1]);
+		life->setWidth(values[2]);
+	}
 	game->popState();
 }

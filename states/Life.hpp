@@ -61,6 +61,7 @@ public:
 	void getIndex(int *x, int *y);
 	void swapCell(int x, int y);
 	void clearGrid();
+	void renderGrid(int x, int y);
 
 	// Create Shapes
 	int createGlider(int x, int y);
@@ -73,14 +74,18 @@ private:
 	SDL_Point offset = SDL_Point{0,0};
 	Game* game = nullptr;
 	LifeMenu* menu = nullptr;
+	SDL_Rect cell;
+	SDL_Rect fullGame;
 	int m_speed = 20;
 	int m_generation = 0;
 	int m_tick = 0;
 	bool m_frozen = false;
 	bool m_paused = false;
+	bool renderInfinity = false;
 	SDL_Point size = SDL_Point{20,20};
 	std::vector<std::vector<bool>> m_grid;
 	std::vector<std::vector<bool>> m_oldGrid;
+
 
 };
 

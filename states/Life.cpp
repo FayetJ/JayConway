@@ -7,9 +7,9 @@ Life::Life(Game* arg_game)
 
 void Life::init()
 {
-	int preset=2;
+	int preset=0;
 	resizeGrid(size.x,size.y);
-	resizeGrid(80,30);
+	resizeGrid(30,30);
 	m_oldGrid = m_grid;
 	m_generation = 0;
 	m_tick = 0;
@@ -32,30 +32,54 @@ void Life::update()
 
 void Life::render()
 {
-	bool alive = false;
-	int w = 0;
-		int h = 0;
-		SDL_GetWindowSize(game->window,&w,&h);
-		for (int i = 0 ; i<size.x ; ++i)
+	if (!renderInfinity)
+	{
+		renderGrid(0,0);
+	}
+	else if (renderInfinity)
+	{
+		int iterations = 1;
+		for (int i=0; i<=iterations; ++i)
 		{
-			for (int j = 0 ; j<size.y ; ++j)
+			for(int j=0; j<=iterations; ++j)
 			{
-				alive = getCell(i,j);
-				SDL_Rect cell {(i*scale-i)+offset.x,(j*scale-j)+offset.y,scale,scale};
-				SDL_SetRenderDrawColor(game->renderer, 255, 255, 255, 255);
-				if (alive)
-				{
-					SDL_RenderFillRect(game->renderer,&cell);
-				}
-				else if(!alive)
-				{
-					SDL_SetRenderDrawColor(game->renderer, 0, 0, 0, 255);
-					SDL_RenderFillRect(game->renderer,&cell);
-				}
-				SDL_SetRenderDrawColor(game->renderer, 255, 255, 255, 255);
-				SDL_RenderDrawRect(game->renderer,&cell);
+				renderGrid(-j*((scale-1)*size.x+1),i*((scale-1)*size.y+1));
+				renderGrid(j*((scale-1)*size.x+1),i*((scale-1)*size.y+1));
 			}
 		}
+	}
+}
+
+void Life::renderGrid(int x, int y)
+{
+	bool alive = false;
+	int w = 0;
+	int h = 0;
+	SDL_GetWindowSize(game->window,&w,&h);
+	for (int i = 0 ; i<size.x ; ++i)
+	{
+		for (int j = 0 ; j<size.y ; ++j)
+		{
+			alive = getCell(i,j);
+			fullGame = SDL_Rect {x+offset.x,y+offset.y,(scale-1)*size.x+1,(scale-1)*size.y+1};
+			cell = SDL_Rect {(i*scale-i)+offset.x+x,(j*scale-j)+offset.y+y,scale,scale};
+			SDL_SetRenderDrawColor(game->renderer, 255, 255, 255, 255);
+			if (alive)
+			{
+				SDL_RenderFillRect(game->renderer,&cell);
+			}
+			else if(!alive)
+			{
+				SDL_SetRenderDrawColor(game->renderer, 0, 0, 0, 255);
+				SDL_RenderFillRect(game->renderer,&cell);
+			}
+			SDL_SetRenderDrawColor(game->renderer, 255, 255, 255, 255);
+			SDL_RenderDrawRect(game->renderer,&cell);
+
+			SDL_SetRenderDrawColor(game->renderer, 255, 0, 0, 255);
+			SDL_RenderDrawRect(game->renderer,&fullGame);
+		}
+	}
 }
 
 void Life::nextGen()
@@ -130,6 +154,7 @@ void Life::resizeGrid(int x, int y)
 	}
 	size.x = x;
 	size.y = y;
+	clearGrid();
 }
 
 int Life::createGlider(int x, int y)
