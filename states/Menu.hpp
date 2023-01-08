@@ -38,13 +38,19 @@ public:
 	virtual void renderBg(){};
 	void displayEntry(int n, int x, int y, bool selected);
 	void displayEntries();
+	void displayNumber(int number, int x, int y, bool selected);
+	void displayValue(int n, bool selected);
 
 protected:
 	TTF_Font *font = nullptr;
 	SDL_Color color = SDL_Color{255,255,255};
 	std::vector<SDL_Texture*> t_unselected;
 	std::vector<SDL_Texture*> t_selected;
+	std::array<SDL_Texture*,10> n_selected;
+	std::array<SDL_Texture*,10> n_unselected;
 	std::vector<std::string> a_texts;
+	std::vector<int> values;
+	std::array<std::string,10> a_numbers;
 	Game* game = nullptr;
 	SDL_Rect* fullscreenRect = nullptr;
 	SDL_Rect* menuRect = nullptr;

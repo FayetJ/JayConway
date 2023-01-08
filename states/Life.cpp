@@ -3,12 +3,11 @@
 Life::Life(Game* arg_game)
 {
 	game = arg_game;
-	menu = new(LifeMenu)(this,game);
 }
 
 void Life::init()
 {
-	int preset=0;
+	int preset=2;
 	resizeGrid(size.x,size.y);
 	resizeGrid(80,30);
 	m_oldGrid = m_grid;
@@ -16,6 +15,7 @@ void Life::init()
 	m_tick = 0;
 	m_speed = 10;
 	generatePreset(preset);
+	menu = new(LifeMenu)(this,game);
 }
 
 void Life::update()
@@ -290,4 +290,29 @@ int Life::getGen()
 void Life::setSpeed(int ticksPerGen)
 {
 	m_speed = ticksPerGen;
+}
+
+void Life::setHeight(int height)
+{
+	resizeGrid(size.x,height);
+}
+
+void Life::setWidth(int width)
+{
+	resizeGrid(width,size.y);
+}
+
+int Life::getSpeed()
+{
+	return m_speed;
+}
+
+int Life::getHeight()
+{
+	return size.y;
+}
+
+int Life::getWidth()
+{
+	return size.x;
 }

@@ -8,6 +8,7 @@
 #include <string.h>
 #include <array>
 #include <iostream>
+#include "LifeSettings.hpp"
 
 class Life;
 
@@ -31,7 +32,7 @@ public:
 	void moveRightAction(){};
 	void zoomUpAction(){};
 	void zoomDownAction(){};
-	void enterAction(){};
+	void enterAction();
 	void clear(){};
 
 	void click(int x, int y){};
@@ -41,6 +42,7 @@ public:
 
 private:
 	Life* life = nullptr;
+	LifeSettings* settings = nullptr;
 };
 
 #endif // LIFEMENU_HPP
