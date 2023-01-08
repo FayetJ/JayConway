@@ -8,15 +8,15 @@ class GameState
 {
 public:
 	GameState();
-	virtual void init() = 0;
-	virtual void cleanup() = 0;
+	virtual void init(){};
+	virtual void cleanup(){};
 
-	virtual void pause() = 0;
-	virtual void resume() = 0;
+	virtual void pause(){};
+	virtual void resume(){};
 
 	// Routine
-	virtual void update() = 0;
-	virtual void render() = 0;
+	virtual void update(){};
+	virtual void render(){};
 
 	void changeState(Game* game, GameState* state)
 	{
@@ -24,20 +24,20 @@ public:
 	}
 
 	// KB Inputs
-	virtual void rightAction() = 0;
-	virtual void leftAction() = 0;
-	virtual void upAction() = 0;
-	virtual void downAction() = 0;
-	virtual void spaceAction() = 0;
-	virtual void enterAction() = 0;
-	virtual void moveUpAction() = 0;
-	virtual void moveDownAction() = 0;
-	virtual void moveLeftAction() = 0;
-	virtual void moveRightAction() = 0;
-	virtual void zoomUpAction() = 0;
-	virtual void zoomDownAction() = 0;
+	virtual void rightAction(){};
+	virtual void leftAction(){};
+	virtual void upAction(){};
+	virtual void downAction(){};
+	virtual void spaceAction(){};
+	virtual void enterAction(){};
+	virtual void moveUpAction(){};
+	virtual void moveDownAction(){};
+	virtual void moveLeftAction(){};
+	virtual void moveRightAction(){};
+	virtual void zoomUpAction(){};
+	virtual void zoomDownAction(){};
 	virtual void escapeAction(){};
-	virtual void clear() = 0;
+	virtual void clear(){};
 
 	// Mouse Inputs
 	virtual void click(int x, int y) = 0;

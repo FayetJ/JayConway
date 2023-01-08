@@ -42,6 +42,11 @@ public:
 	bool getCell(int x, int y);
 	int getGen();
 	void setSpeed(int ticksPerGen);
+	void setHeight(int height);
+	void setWidth(int width);
+	int getSpeed();
+	int getHeight();
+	int getWidth();
 
 	// Life Flow
 	void nextGen();
