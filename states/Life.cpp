@@ -39,12 +39,19 @@ void Life::render()
 	else if (renderInfinity)
 	{
 		int iterations = 1;
-		for (int i=0; i<=iterations; ++i)
+		if (iterations==0)
 		{
-			for(int j=0; j<=iterations; ++j)
+			renderGrid(0,0);
+		}
+		else
+		{
+			for (int i=-iterations; i<=iterations; ++i)
 			{
-				renderGrid(-j*((scale-1)*size.x+1),i*((scale-1)*size.y+1));
-				renderGrid(j*((scale-1)*size.x+1),i*((scale-1)*size.y+1));
+				for(int j=0; j<=iterations; ++j)
+				{
+					renderGrid(-j*((scale-1)*size.x+1),i*((scale-1)*size.y+1));
+					renderGrid(j*((scale-1)*size.x+1),i*((scale-1)*size.y+1));
+				}
 			}
 		}
 	}
@@ -75,9 +82,11 @@ void Life::renderGrid(int x, int y)
 			}
 			SDL_SetRenderDrawColor(game->renderer, 255, 255, 255, 255);
 			SDL_RenderDrawRect(game->renderer,&cell);
-
-			SDL_SetRenderDrawColor(game->renderer, 255, 0, 0, 255);
-			SDL_RenderDrawRect(game->renderer,&fullGame);
+			if (renderInfinity)
+			{
+				SDL_SetRenderDrawColor(game->renderer, 255, 0, 0, 255);
+				SDL_RenderDrawRect(game->renderer,&fullGame);
+			}
 		}
 	}
 }

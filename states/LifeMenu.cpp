@@ -5,10 +5,10 @@ LifeMenu::LifeMenu(Life* arg_life, Game* arg_game)
 {
 	life = arg_life;
 	game = arg_game;
-	a_texts.resize(6);
-	values.resize(6);
+	a_texts.resize(3);
+	values.resize(3);
 	std::fill(values.begin(), values.end(), -1);
-	a_texts = {"Resume", "Speed", "Settings", "Exit game", "Pain", "Test"};
+	a_texts = {"Resume", "Settings", "Exit game"};
 	settings = new LifeSettings(life,game);
 }
 
@@ -21,8 +21,14 @@ void LifeMenu::enterAction()
 {
 	switch(selector)
 	{
-		case 2:
+		case 0:
+			game->popState();
+			break;
+
+		case 1:
 			game->pushState(settings);
 			break;
+		case 2:
+			game->close();
 	}
 }
