@@ -130,6 +130,6 @@ void Menu::upAction()
 
 void Menu::escapeAction()
 {
-	clear();
+	cleanup();
 	game->popState();
 }

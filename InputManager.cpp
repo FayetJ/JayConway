@@ -38,8 +38,8 @@ void InputManager::handleEvents()
 					game->getCurrentState()->escapeAction();
 					break;
 
-				case clear:
-					game->getCurrentState()->clear();
+				case del:
+					game->getCurrentState()->delAction();
 
 				default:
 					break;
@@ -117,6 +117,7 @@ void InputManager::handleEvents()
 	sendHeldKeys();
 }
 
+// Support for holding keys
 void InputManager::sendHeldKeys()
 {
 	if (moveUpHeld)

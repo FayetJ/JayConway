@@ -38,7 +38,7 @@ void LifeSettings::leftAction()
 	}
 }
 
-void LifeSettings::clear()
+void LifeSettings::cleanup()
 {
 	life->setSpeed(values[0]);
 	if (life->getHeight() != values[1] || life->getWidth() != values[2])

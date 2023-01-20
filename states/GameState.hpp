@@ -8,11 +8,10 @@ class GameState
 {
 public:
 	GameState();
+
+	// Initialization and destruction
 	virtual void init(){};
 	virtual void cleanup(){};
-
-	virtual void pause(){};
-	virtual void resume(){};
 
 	// Routine
 	virtual void update(){};
@@ -23,7 +22,7 @@ public:
 		game->changeState(state);
 	}
 
-	// KB Inputs
+	// Keyboard Inputs
 	virtual void rightAction(){};
 	virtual void leftAction(){};
 	virtual void upAction(){};
@@ -37,10 +36,10 @@ public:
 	virtual void zoomUpAction(){};
 	virtual void zoomDownAction(){};
 	virtual void escapeAction(){};
-	virtual void clear(){};
+	virtual void delAction(){};
 
 	// Mouse Inputs
-	virtual void click(int x, int y) = 0;
+	virtual void click(int x, int y){};
 };
 
 #endif // GAMESTATE_HPP

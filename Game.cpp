@@ -48,6 +48,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 void Game::waitForFrame()
 {
+	SDL_Delay(10); // Delay will be changed to an adaptive sleep() depending on frame time
 	currentTime = std::chrono::steady_clock::now();
 	while (currentTime - beginTime < deltan)
 	{
@@ -76,10 +77,6 @@ void Game::render()
 
 void Game::pushState(GameState* state)
 {
-	if (!states.empty())
-	{
-		states.back()->pause();
-	}
 	states.push_back(state);
 	states.back()->init();
 }
@@ -90,10 +87,6 @@ void Game::popState()
 	{
 		states.back()->cleanup();
 		states.pop_back();
-	}
-	if (!states.empty())
-	{
-		states.back()->resume();
 	}
 	else
 	{

@@ -19,21 +19,9 @@ public:
 
 	// Boilerplate
 	void cleanup(){};
-	void pause(){};
-	void resume(){};
 
 	// Inputs
-	void rightAction(){};
-	void leftAction(){};
-	void spaceAction(){};
-	void moveUpAction(){};
-	void moveDownAction(){};
-	void moveLeftAction(){};
-	void moveRightAction(){};
-	void zoomUpAction(){};
-	void zoomDownAction(){};
 	void enterAction();
-	void clear(){};
 
 	void click(int x, int y){};
 

@@ -23,7 +23,6 @@ int main()
 	{
 		game->update();
 		game->render();
-		SDL_Delay(10);
 		game->handleEvents();
 		game->waitForFrame();
 	}

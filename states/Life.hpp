@@ -16,9 +16,6 @@ public:
 	void update();
 	void render();
 	void init();
-	void cleanup(){};
-	void pause(){};
-	void resume(){};
 
 	// Inputs
 	void spaceAction();
@@ -30,7 +27,7 @@ public:
 	void zoomUpAction();
 	void zoomDownAction();
 	void enterAction();
-	void clear();
+	void delAction();
 
 	void click(int x, int y);
 
@@ -46,8 +43,6 @@ public:
 
 	// Life Flow
 	void nextGen();
-	void pauseGame(bool paused);
-	void freezeSimulation(bool frozen);
 	void toggleFrozen();
 	void togglePause();
 	void generatePreset(int preset);
@@ -78,7 +73,7 @@ private:
 	bool m_frozen = false;
 	bool m_paused = false;
 	bool renderInfinity = false;
-	SDL_Point size = SDL_Point{20,20};
+	SDL_Point size = SDL_Point{20,20}; // Need to refactor every function that still uses "int x, int y"
 	std::vector<std::vector<bool>> m_grid;
 	std::vector<std::vector<bool>> m_oldGrid;
 

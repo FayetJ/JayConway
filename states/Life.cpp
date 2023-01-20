@@ -134,16 +134,6 @@ void Life::nextGen()
 	++m_generation;
 }
 
-void Life::pauseGame(bool paused)
-{
-	m_paused = paused;
-}
-
-void Life::freezeSimulation(bool frozen)
-{
-	m_frozen = frozen;
-}
-
 void Life::toggleFrozen()
 {
 	m_frozen = !m_frozen;
@@ -275,7 +265,7 @@ void Life::zoomUpAction()
 	}
 }
 
-void Life::clear()
+void Life::delAction()
 {
 	clearGrid();
 }
