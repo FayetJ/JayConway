@@ -38,7 +38,7 @@ void LifeSettings::leftAction()
 	}
 }
 
-void LifeSettings::escapeAction()
+void LifeSettings::clear()
 {
 	life->setSpeed(values[0]);
 	if (life->getHeight() != values[1] || life->getWidth() != values[2])
@@ -46,5 +46,4 @@ void LifeSettings::escapeAction()
 		life->setHeight(values[1]);
 		life->setWidth(values[2]);
 	}
-	game->popState();
 }

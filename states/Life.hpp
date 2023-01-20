@@ -21,10 +21,6 @@ public:
 	void resume(){};
 
 	// Inputs
-	void rightAction(){};
-	void leftAction(){};
-	void upAction(){};
-	void downAction(){};
 	void spaceAction();
 	void escapeAction();
 	void moveUpAction();
@@ -63,7 +59,7 @@ public:
 	void clearGrid();
 	void renderGrid(int x, int y);
 
-	// Create Shapes
+	// (Debug) Create Shapes
 	int createGlider(int x, int y);
 	int createBlinker(int x, int y);
 	int createPentaDecathlon(int x, int y);

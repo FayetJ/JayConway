@@ -32,6 +32,7 @@ void Life::update()
 
 void Life::render()
 {
+	// Render Infinity : Experimental feature allowing for infinite grid rendering
 	if (!renderInfinity)
 	{
 		renderGrid(0,0);
@@ -93,7 +94,7 @@ void Life::renderGrid(int x, int y)
 
 void Life::nextGen()
 {
-	// Update entire grid
+	// Creates next generation of the grid
 	int neighbors = 0;
 	int xp,xm,yp,ym = 0;
 	m_oldGrid = m_grid;
@@ -114,7 +115,6 @@ void Life::nextGen()
 			// If dead cell surrounded by 3 live, create life
 			if (m_oldGrid[x][y] == false && neighbors == 3)
 			{
-				// std::cout << "Created life at [" << x << "][" << y << "]" << std::endl;
 				m_grid[x][y] = true;
 			}
 

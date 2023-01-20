@@ -17,11 +17,8 @@ public:
 	void resume(){};
 
 	// Inputs
-	void rightAction(){};
-	void leftAction(){};
 	void upAction();
 	void downAction();
-	void spaceAction(){};
 	void escapeAction();
 	void moveUpAction(){};
 	void moveDownAction(){};

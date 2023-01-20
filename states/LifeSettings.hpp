@@ -18,7 +18,7 @@ public:
 
 	void rightAction();
 	void leftAction();
-	void escapeAction();
+	void clear();
 
 private:
 	Life* life = nullptr;
