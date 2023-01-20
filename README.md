@@ -6,6 +6,11 @@ Default controls :
 <br>
 Space : Pause/Unpause simulation 
 <br>
-Right-Arrow : trigger next generation
+ENTER : trigger next generation
 <br>
 ESC : Open menu
+<br>
+DELETE : clear entire grid
+<br>
+Up and Down arrow : Zoom Up | Zoom Down
+
