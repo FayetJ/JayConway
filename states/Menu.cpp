@@ -10,7 +10,7 @@ void Menu::init()
 	t_selected.resize(a_texts.size());
 	t_unselected.resize(a_texts.size());
 	a_numbers = {"0","1","2","3","4","5","6","7","8","9"};
-	font = TTF_OpenFont("monobold.ttf",24);
+	font = TTF_OpenFont("fonts/monobold.ttf",24);
 	SDL_Color selected = {0,255,0,0};
 	SDL_Color unselected = {255,255,255,0};
 	SDL_Surface* tempSurf = nullptr;
