@@ -43,9 +43,9 @@ void Menu::render()
 	fullscreenRect = nullptr;
 	int w,h;
 	SDL_GetWindowSize(game->window, &w, &h);
-	scalex = int(w/3);
+	scalex = int(w/2);
 	scaley = int(h*0.75);
-	menuRect = new SDL_Rect{int(scalex),int(scaley/5),scalex,scaley};
+	menuRect = new SDL_Rect{int(scalex-200),int(scaley/5),400,scaley};
 	fullscreenRect = new SDL_Rect{0,0,w,h};
 
 	renderBg();
@@ -103,7 +103,7 @@ void Menu::displayValue(int n, bool selected)
 {
 	if (values[n] != -1)
 	{
-		displayNumber(values[n],scalex+300,(100*n)+200,selected);
+		displayNumber(values[n],scalex-200+300,(100*n)+200,selected);
 	}
 }
 
@@ -111,7 +111,7 @@ void Menu::displayEntries()
 {
 	for (int i = 0; i<a_texts.size(); ++i)
 	{
-		displayEntry(i,scalex+20,(100*i)+200,(selector==i));
+		displayEntry(i,scalex-200+20,(100*i)+200,(selector==i));
 		displayValue(i,(selector==i));
 	}
 }

@@ -52,7 +52,7 @@ public:
 	void getIndex(int *x, int *y);
 	void swapCell(int x, int y);
 	void clearGrid();
-	void renderGrid(int x, int y);
+	void renderGrid();
 
 	// (Debug) Create Shapes
 	int createGlider(int x, int y);

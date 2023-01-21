@@ -9,7 +9,7 @@ void Life::init()
 {
 	int preset=0;
 	resizeGrid(size.x,size.y);
-	resizeGrid(30,30);
+	resizeGrid(50,50);
 	m_oldGrid = m_grid;
 	m_generation = 0;
 	m_tick = 0;
@@ -32,17 +32,17 @@ void Life::update()
 
 void Life::render()
 {
-	// Render Infinity : Experimental feature allowing for infinite grid rendering
 	if (!renderInfinity)
 	{
-		renderGrid(0,0);
+		renderGrid();
 	}
+	// Render Infinity : Experimental feature allowing for infinite grid rendering
 	else if (renderInfinity)
 	{
 		int iterations = 1;
 		if (iterations==0)
 		{
-			renderGrid(0,0);
+			renderGrid();
 		}
 		else
 		{
@@ -50,45 +50,43 @@ void Life::render()
 			{
 				for(int j=0; j<=iterations; ++j)
 				{
-					renderGrid(-j*((scale-1)*size.x+1),i*((scale-1)*size.y+1));
-					renderGrid(j*((scale-1)*size.x+1),i*((scale-1)*size.y+1));
+					//renderGrid(-j*((scale-1)*size.x+1),i*((scale-1)*size.y+1));
+					//renderGrid(j*((scale-1)*size.x+1),i*((scale-1)*size.y+1));
 				}
 			}
 		}
 	}
 }
 
-void Life::renderGrid(int x, int y)
+void Life::renderGrid()
 {
 	bool alive = false;
-	int w = 0;
-	int h = 0;
-	SDL_GetWindowSize(game->window,&w,&h);
+	int lineOffset = 0;
+	cell.h = scale;
+	cell.w = scale;
+	SDL_SetRenderDrawColor(game->renderer, 255, 255, 255, 255);
+	SDL_RenderDrawLine(game->renderer, offset.x, lineOffset + offset.y, offset.x + (scale-1)*size.x, lineOffset+offset.y);
+	SDL_RenderDrawLine(game->renderer, lineOffset + offset.x, offset.y, lineOffset + offset.x, (offset.y) + (scale-1) * size.y);
 	for (int i = 0 ; i<size.x ; ++i)
 	{
+		lineOffset = lineOffset + scale - 1;
 		for (int j = 0 ; j<size.y ; ++j)
 		{
 			alive = getCell(i,j);
-			fullGame = SDL_Rect {x+offset.x,y+offset.y,(scale-1)*size.x+1,(scale-1)*size.y+1};
-			cell = SDL_Rect {(i*scale-i)+offset.x+x,(j*scale-j)+offset.y+y,scale,scale};
-			SDL_SetRenderDrawColor(game->renderer, 255, 255, 255, 255);
 			if (alive)
 			{
+				cell.x = (i*scale-i)+offset.x;
+				cell.y = (j*scale-j)+offset.y;
 				SDL_RenderFillRect(game->renderer,&cell);
-			}
-			else if(!alive)
-			{
-				SDL_SetRenderDrawColor(game->renderer, 0, 0, 0, 255);
-				SDL_RenderFillRect(game->renderer,&cell);
-			}
-			SDL_SetRenderDrawColor(game->renderer, 255, 255, 255, 255);
-			SDL_RenderDrawRect(game->renderer,&cell);
-			if (renderInfinity)
-			{
-				SDL_SetRenderDrawColor(game->renderer, 255, 0, 0, 255);
-				SDL_RenderDrawRect(game->renderer,&fullGame);
 			}
 		}
+		SDL_RenderDrawLine(game->renderer, lineOffset + offset.x, offset.y, lineOffset + offset.x, (offset.y) + (scale-1) * size.y);
+	}
+	lineOffset = 0;
+	for (int i = 0 ; i<size.y ; ++i)
+	{
+		lineOffset = lineOffset + scale - 1;
+		SDL_RenderDrawLine(game->renderer, offset.x, lineOffset + offset.y, offset.x + (scale-1)*size.x, lineOffset+offset.y);
 	}
 }
 
